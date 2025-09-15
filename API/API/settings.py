@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "corsheaders"
+    "corsheaders",
+    "EmployeesApp.apps.EmployeesappConfig"
+    "rest_framework"
 ]
 
 #allowing all just for test purposes
