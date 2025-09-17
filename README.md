@@ -1,2 +1,2 @@
-# A Full-Stack Application built using Python with Django for the Backend TypeScript with Angular for the Frontend
-REST API built using for the backend Python with the Django framework, and for the frontend Javascript with the Angular framework, and Docker to ensure portability (easy to migrate applications between different environments).)
+# A full-stack web application to manage a company's employees and departments  
+The backend was built using Python with the Django framework, and the frontend was built using TypeScript with the Angular framework. Docker to ensure portability (easy to migrate applications between different environments).)
