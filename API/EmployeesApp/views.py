@@ -7,7 +7,7 @@ from EmployeesApp.serializers import DepartmentsSerializers, EmployeesSerializer
 
 # Create your views here.
 
-#Department API defines the CRUD operations of the Departments models
+#Departments API defines the CRUD operations of the Departments models
 #GET shows all Departments and its columns, POST creates a new department
 # #DELETE deletes a department and all its columns from the database, PUT updates information about Departments already stored
 @csrf_exempt
@@ -38,6 +38,39 @@ def DepartmentsAPI(request,id=0):
         department_variable.delete()
         return JsonResponse("Deleted Successfully",safe=False)
     
-#Employees API
+#Employees API defines the CRUD operations of the Departments models
+#GET shows all Departments and its columns, POST creates a new department
+# #DELETE deletes a department and all its columns from the database, PUT updates information about Departments already stored
 @csrf_exempt
 def EmployeesAPI(request,id=0):
+    if request.method=="GET":
+        employee_variable = Employees.objects.all()
+        em_serializer_variable = EmployeesSerializers(employee_variable,many=True)
+        return JsonResponse(em_serializer_variable.data,safe=False)
+    elif request.method=="POST":
+        em_data=JSONParser.parse(request)
+        em_serializer_variable=EmployeesSerializers(data=em_data)
+        if em_serializer_variable.is_valid():
+            em_serializer_variable.save()
+            return JsonResponse("Added Successfully",safe=False)
+        else:
+            return JsonResponse("Failed to add",safe=False)
+    elif request.method=="PUT":
+        em_data=JSONParser.parse(request)
+        employee_variable=Employees.objects.get(EmployeeID=em_data["EmployeeID"])
+        em_serializer_variable=EmployeesSerializers(employee_variable,data=em_data)
+        if em_serializer_variable.is_valid():
+            em_serializer_variable.save()
+            return JsonResponse("Updated Successfully",safe=False)
+        else:
+            return JsonResponse("Failed to Update",safe=False)
+    elif request.method=="DELETE":
+        employee_variable=Employees.objects.get(EmployeeID=id)
+        employee_variable.delete()
+        return JsonResponse("Deleted Successfully",safe=False)
+
+@csrf_exempt
+def SaveImage(request):
+    file=request.FILES['uploadedFile']
+    file_name = default_storage.save(file.name,file)
+    return JsonResponse(file_name,safe=False)
