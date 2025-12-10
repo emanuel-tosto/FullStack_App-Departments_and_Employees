@@ -11,7 +11,43 @@ export class ShowDepComponent {
   constructor(private service:SharedService) {}
 
   DepartmentList: any=[];
+  ModalTitle:string;
+  ActivateAddEditDepComp:boolean=false;
+  dep:any;
   ngOnInit(): void{
+    this.refreshDepList();
+  }
+
+  addClick(){
+    this.dep={
+      DepartmentID:0,
+      DepartmentName:""
+    }
+    this.ModalTitle="Add Department";
+    this.ActivateAddEditDepComp=true;
+  }
+
+  editClick(){
+    this.dep=item;
+    this.ModalTitle="Edit Department";
+    this.ActivateAddEditDepComp=true;
+  }
+
+  deleteClick(item){
+    if (confirm("confirm deletion?")){
+      this.service.deleteDepartment(item.DepartmentID).subscribe(data=>{
+        alert(data.toString());
+        this.refreshDepList();
+      }
+
+      )
+    }
+
+
+  }
+
+  closeClick(){
+    this.ActivateAddEditDepComp=false;
     this.refreshDepList();
   }
 
